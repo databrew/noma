@@ -73,3 +73,21 @@ ggplot(long_data,
   labs(x = 'Day', y = '') +
   theme(legend.position = 'bottom') +
   scale_colour_discrete(name = '')
+
+# Range plot
+pd <- long_data %>%
+  group_by(key) %>%
+  summarise(avg = mean(value),
+            minimum = min(value),
+            maximum = max(value))
+
+ggplot(data = pd,
+       aes(x = avg,
+           y = key)) +
+  geom_point() +
+  geom_errorbar(aes(
+    xmin = minimum,
+    xmax = maximum)) +
+  theme_bw() +
+  labs(x = 'Days',
+       y = 'Symptom')
